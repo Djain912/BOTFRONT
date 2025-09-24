@@ -209,23 +209,24 @@ const CompanyChatbot = ({
     
     const utterance = new SpeechSynthesisUtterance(cleanText);
     
-    // Configure for sweet female voice
+    // Configure for male voice
     const voices = speechSynthesis.getVoices();
-    const femaleVoice = voices.find(voice => 
-      voice.name.includes('Female') || 
-      voice.name.includes('Samantha') || 
-      voice.name.includes('Karen') ||
-      voice.name.includes('Moira') ||
-      voice.name.includes('Tessa') ||
-      (voice.lang.startsWith('en') && voice.name.includes('Google'))
+    const maleVoice = voices.find(voice => 
+      voice.name.includes('Male') || 
+      voice.name.includes('Daniel') || 
+      voice.name.includes('Alex') ||
+      voice.name.includes('Tom') ||
+      voice.name.includes('James') ||
+      voice.name.includes('David') ||
+      (voice.lang.startsWith('en') && (voice.name.includes('Google') || voice.name.includes('Microsoft')))
     ) || voices.find(voice => voice.lang.startsWith('en'));
     
-    if (femaleVoice) {
-      utterance.voice = femaleVoice;
+    if (maleVoice) {
+      utterance.voice = maleVoice;
     }
     
     utterance.rate = 0.9; // Slightly slower for clarity
-    utterance.pitch = 1.2; // Higher pitch for sweeter voice
+    utterance.pitch = 0.8; // Lower pitch for male voice
     utterance.volume = 0.8;
     
     utterance.onstart = () => setIsSpeaking(true);
@@ -337,7 +338,7 @@ const CompanyChatbot = ({
       setMessages([{
         id: 1,
         type: 'bot',
-        content: `Hi! I'm Luna, your AI assistant from ${companyName}. I'm here to help answer any questions about our services, pricing, or how we can help your business. What would you like to know?`,
+        content: `Hi! I'm Genie, your AI assistant from ${companyName}. I'm here to help answer any questions about our services, pricing, or how we can help your business. What would you like to know?`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }]);
     }
@@ -577,7 +578,7 @@ const CompanyChatbot = ({
                           : 'bg-[#202127] text-white'
                     }`}>
                       <div 
-                        className="text-base leading-relaxed whitespace-pre-wrap font-semibold"
+                        className="text-sm leading-relaxed whitespace-pre-wrap font-semibold"
                         dangerouslySetInnerHTML={{ __html: formatMessage(message.content) }}
                       />
                       <div className="flex items-center justify-between mt-2">
